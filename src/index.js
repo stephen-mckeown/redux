@@ -33,8 +33,10 @@ const unsubscribe = store.subscribe(subscriber);
 //Bind Action Creators
 //const dispatchIncrement = () => store.dispatch(increment());
 //const dispatchAdd = (number) => store.dispatch(add(number));
+
 //const dispatchIncrement = compose(store.dispatch, increment);
 //const dispatchAdd = compose(store.dispatch, add);
+//bindActionCreators join 2 functions into 1 store.dispatch(increment()) == actions.increment();
 const actions = bindActionCreators({ increment, add }, store.dispatch);
 
 actions.add(1000);  //SUBSCRIBER {value: 1000}
@@ -42,7 +44,15 @@ actions.increment(); //SUBSCRIBER {value: 1001}
 store.dispatch(increment());
 
 unsubscribe();
-
 store.dispatch(add(3));  //(silence)
+
+console.log("store" , store)
+// {
+//   dispatch: [Function: dispatch],
+//   subscribe: [Function: subscribe],
+//   getState: [Function: getState],
+//   replaceReducer: [Function: replaceReducer],
+//   '@@observable': [Function: observable]
+// }
 
 // console.log(store.getState());

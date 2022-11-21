@@ -15,7 +15,7 @@ const initialState = {
 const ADD_USER = "ADD_USER";
 const ADD_TASK = "ADD_TASK";
 
-const addTask = (title) => ({ type: ADD_TASK, payload: { title } });
+const addTask = (title, id) => ({ type: ADD_TASK, payload: { title, id } });
 const addUser = (name) => ({ type: ADD_USER, payload: { name } });
 
 // const reducer = (state = initialState, action) => {
@@ -44,7 +44,9 @@ const addUser = (name) => ({ type: ADD_USER, payload: { name } });
 
 const users = (state = initialState.users, action) => {
     if (action.type === ADD_USER) {
-      return [...state, action.payload];
+        console.log("stateReducer", state)
+        console.log("actionReducer", action)
+      return [...state, Object.assign({id: state.pop().id + 1}, action.payload)];
     }
   
     return state;
@@ -61,6 +63,11 @@ const users = (state = initialState.users, action) => {
   // can pass 1 action and it will proform on all reducers
   // ie same action.type on each reducer
   const reducer = combineReducers({ users, tasks });
+
+  
   
   const store = createStore(reducer);
+  store.dispatch(addUser("Dave"))
+  store.dispatch(addTask("work harder", 2))
+
   console.log(store.getState())
